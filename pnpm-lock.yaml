@@ -14,9 +14,6 @@ importers:
       '@legendapp/state':
         specifier: ^2.1.4
         version: 2.1.4(react@18.2.0)
-      '@phosphor-icons/react':
-        specifier: ^2.0.15
-        version: 2.0.15(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@radix-ui/themes':
         specifier: ^2.0.3
         version: 2.0.3(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -38,6 +35,9 @@ importers:
       electron-trpc:
         specifier: ^0.5.2
         version: 0.5.2(@trpc/client@10.44.1(@trpc/server@10.44.1))(@trpc/server@10.44.1)(electron@28.0.0)
+      lucide-react:
+        specifier: ^0.396.0
+        version: 0.396.0(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -769,13 +769,6 @@ packages:
     resolution: {integrity: sha512-mJd2Z5TjYWq/ttPLLGqArdtnC74J6bOzg4rMDnN+p1xTacZ2yPRCk2y0oSWQtygLR9YVQXgOcONrwtnk3JupxQ==}
     engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
     deprecated: This functionality has been moved to @npmcli/fs
-
-  '@phosphor-icons/react@2.0.15':
-    resolution: {integrity: sha512-PQKNcRrfERlC8gJGNz0su0i9xVmeubXSNxucPcbCLDd9u0cwJVTEyYK87muul/svf0UXFdL2Vl6bbeOhT1Mwow==}
-    engines: {node: '>=10'}
-    peerDependencies:
-      react: '>= 16.8'
-      react-dom: '>= 16.8'
 
   '@polka/url@1.0.0-next.24':
     resolution: {integrity: sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==}
@@ -2447,6 +2440,11 @@ packages:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
 
+  lucide-react@0.396.0:
+    resolution: {integrity: sha512-N/zP+9vEfEYHiMWMpjwH/M5diaV0e4UFe07BpgdzaRYce5QvXi87hixf7F0Xqdr3zuX/9u7H/2D4MVXIK22O0A==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+
   magic-string@0.30.5:
     resolution: {integrity: sha512-7xlpfBaQaP/T6Vh8MO/EqXSW5En6INHEvEXQiuff7Gku0PWjU3uf6w/j9o7O+SpB5fOAkrI5HeoNgwjEO0pFsA==}
     engines: {node: '>=12'}
@@ -3889,11 +3887,6 @@ snapshots:
     dependencies:
       mkdirp: 1.0.4
       rimraf: 3.0.2
-
-  '@phosphor-icons/react@2.0.15(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
 
   '@polka/url@1.0.0-next.24': {}
 
@@ -5855,6 +5848,10 @@ snapshots:
       yallist: 4.0.0
 
   lru-cache@7.18.3: {}
+
+  lucide-react@0.396.0(react@18.2.0):
+    dependencies:
+      react: 18.2.0
 
   magic-string@0.30.5:
     dependencies:
