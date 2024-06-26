@@ -1,5 +1,5 @@
 import type { inferAsyncReturnType } from "@trpc/server";
-import { BrowserWindow } from "electron";
+import { BrowserWindow, app,systemPreferences } from "electron";
 import { store } from "./storage";
 
 export async function createContext() {
@@ -8,6 +8,8 @@ export async function createContext() {
   return {
     window: browserWindow,
     store,
+    app,
+    sys:systemPreferences
   };
 }
 

@@ -1,13 +1,32 @@
-import t from "@src/shared/config";
+import { useMount } from "@legendapp/state/react";
+import { Button, Flex } from "@radix-ui/themes";
+import { Sidebar } from "lucide-react";
 import type React from "react";
+import { globalState$ } from "../state";
 
 type LayoutProps = {
   children?: React.ReactNode;
 };
 
 export default function Layout({ children }: LayoutProps) {
-  const { mutate: minimizeWindow } = t.window.minimize.useMutation();
-  const { mutate: closeWindow } = t.window.closeWindow.useMutation();
+  useMount(() => {
+    if (globalState$.colorMode.get() === "dark") {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  });
 
-  return <div className="w-full h-screen px-10 py-10">content</div>;
+  return (
+    <Flex className="w-full h-screen bg-transparent">
+      <Flex align="start" className="w-[20%] px-2 py-1" direction="column">
+        <Flex align="center" justify="between" width="100%">
+          <Button size="1" variant="soft">
+            <Sidebar size={10} />
+          </Button>
+        </Flex>
+      </Flex>
+      <Flex className="w-[80%] bg-zinc-800">{children}</Flex>
+    </Flex>
+  );
 }

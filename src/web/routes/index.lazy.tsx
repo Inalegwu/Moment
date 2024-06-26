@@ -1,4 +1,4 @@
-import { Flex } from "@radix-ui/themes";
+import { Flex, Text } from "@radix-ui/themes";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 export const Route = createLazyFileRoute("/")({
@@ -7,14 +7,8 @@ export const Route = createLazyFileRoute("/")({
 
 function Index() {
   return (
-    <Flex
-      grow="1"
-      direction="column"
-      className="h-screen w-full overflow-y-scroll pb-14"
-      gap="4"
-      p="2"
-    >
-      content
+    <Flex grow="1" direction="column" className="h-screen w-full bg-none">
+      <Text size="9">Moment</Text>
     </Flex>
   );
 }

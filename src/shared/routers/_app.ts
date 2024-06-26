@@ -1,8 +1,11 @@
-import { router } from "@src/trpc";
-import { windowRouter } from "./window";
+import { publicProcedure, router } from "@src/trpc";
 
 export const appRouter = router({
-  window: windowRouter,
+  getDeviceAccentColor: publicProcedure.query(async ({ ctx }) => {
+    return {
+      color: ctx.sys.getAccentColor(),
+    };
+  }),
 });
 
 export type AppRouter = typeof appRouter;
