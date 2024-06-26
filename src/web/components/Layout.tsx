@@ -1,6 +1,6 @@
 import { useMount } from "@legendapp/state/react";
-import { Button, Dialog, Flex } from "@radix-ui/themes";
-import { Info, Settings, Sidebar, X } from "lucide-react";
+import { Button, Dialog, Flex, Text } from "@radix-ui/themes";
+import { FolderOpen, Info, Plus, Settings, Sidebar, X } from "lucide-react";
 import type React from "react";
 import { globalState$ } from "../state";
 
@@ -28,32 +28,47 @@ export default function Layout({ children }: LayoutProps) {
         <Flex width="100%" grow="1" direction="column" align="start">
           <Flex align="center" justify="end" width="100%" className="px-3 py-2">
             <Button
-              size="1"
-              variant="ghost"
-              radius="full"
               color="gray"
-              className="cursor-pointer w-3 h-5"
+              className="cursor-pointer rounded-md bg-transparent p-2 hover:bg-zinc-700/20 w-8 flex items-center justify-center"
             >
-              <Sidebar size={11} />
+              <Sidebar size={12} className="text-teal-500/30" />
             </Button>
           </Flex>
-        </Flex>
-        <Flex className="px-3 py-3" align="center" justify="start" gap="5">
-          <Button
-            variant="ghost"
-            color="gray"
-            className="w-3 h-5 rounded-full cursor-pointer"
+          <Flex
+            width="100%"
+            className="hover:bg-zinc-700/20 py-3 px-2 cursor-pointer"
+            align="center"
+            justify="start"
+            gap="2"
           >
-            <Settings size={11} />
+            <Plus size={12} />
+            <Text className="text-[12px]">New Project</Text>
+          </Flex>
+          <Flex
+            width="100%"
+            className="hover:bg-zinc-700/20 py-3 px-2 cursor-pointer"
+            align="center"
+            justify="start"
+            gap="2"
+          >
+            <FolderOpen size={12} />
+            <Text className="text-[12px]">Open Project</Text>
+          </Flex>
+        </Flex>
+        <Flex className="px-2 py-2" align="center" justify="start" gap="2">
+          <Button
+            color="gray"
+            className="cursor-pointer rounded-md bg-transparent hover:bg-zinc-700/20 w-8 backdrop-blur-2xl p-2 flex items-center justify-center"
+          >
+            <Settings size={12} />
           </Button>
           <Dialog.Root>
             <Dialog.Trigger>
               <Button
-                variant="ghost"
                 color="gray"
-                className="w-3 h-5 rounded-full cursor-pointer"
+                className="cursor-pointer rounded-md bg-transparent hover:bg-zinc-700/20 w-8 backdrop-blur-2xl p-2 flex items-center justify-center"
               >
-                <Info size={11} />
+                <Info size={12} />
               </Button>
             </Dialog.Trigger>
             <Dialog.Content
