@@ -3,6 +3,7 @@ import { Button, Flex, Select, Text } from "@radix-ui/themes";
 import t from "@src/shared/config";
 import { createFileRoute } from "@tanstack/react-router";
 import { ChevronDown, Pause, Play, SkipBack, SkipForward } from "lucide-react";
+import { useRef } from "react";
 import { useTimeout, useWindow } from "../hooks";
 
 export const Route = createFileRoute("/")({
@@ -10,8 +11,9 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { data: mediaDevices } = t.media.getCaptureDevices.useQuery();
+  const previewRef = useRef<HTMLVideoElement>(null);
 
+  const { data: mediaDevices } = t.media.getCaptureDevices.useQuery();
   const playBackVisible = useObservable(false);
 
   useTimeout(() => {
@@ -20,28 +22,44 @@ function Index() {
     }
   });
 
+  const getMediaStream = async (id: string) => {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: false,
+      video: {
+        // @ts-ignore:idk whats going on here...
+        mandatory: {
+          chromeMediaSource: "desktop",
+          chromeMediaSourceId: id,
+        },
+      },
+    });
+
+    console.log(stream);
+
+    if (!previewRef.current) return;
+
+    const tracks = stream.getTracks();
+
+    tracks.map(console.log);
+
+    previewRef.current.srcObject = stream;
+    previewRef.current.play();
+  };
+
   useWindow("mousemove", () => {
     playBackVisible.set(true);
   });
 
   return (
-    <Flex grow="1" direction="column" className="h-full w-full" gap="2">
-      <Flex className="w-full h-4/6 relative">
-        <Flex
-          align="center"
-          justify="center"
-          width="100%"
-          className="bg-dark-9 w-full h-full"
-        >
-          <Text size="9" weight="bold">
-            Preview Window
-          </Text>
-        </Flex>
+    <Flex grow="1" direction="column" className="h-full w-full">
+      <Flex className="w-full h-4/6 relative overflow-hidden">
+        <video className="w-full h-full object-contain" ref={previewRef} />
+        {/* controls */}
         <Flex
           direction="column"
           align="start"
           justify="between"
-          className="absolute z-10 bg-dark-9/70 p-2 w-full h-full"
+          className="absolute z-10 p-2 w-full h-full"
         >
           <Flex align="center" justify="between" width="100%" />
           <Flex align="center" width="100%" justify="between">
@@ -49,25 +67,25 @@ function Index() {
             <Flex align="center" justify="end" gap="1">
               <Button
                 color="gray"
-                className="cursor-pointer rounded-md bg-transparent hover:bg-zinc-700/20 w-8 backdrop-blur-2xl p-2 flex items-center justify-center"
+                className="cursor-pointer rounded-md bg-transparent hover:bg-zinc-700/20 w-8 backdrop-blur-3xl p-2 flex items-center justify-center"
               >
                 <SkipBack size={12} />
               </Button>
               <Button
                 color="gray"
-                className="cursor-pointer rounded-md bg-transparent hover:bg-zinc-700/20 w-8 backdrop-blur-2xl p-2 flex items-center justify-center"
+                className="cursor-pointer rounded-md bg-transparent hover:bg-zinc-700/20 w-8 backdrop-blur-3xl p-2 flex items-center justify-center"
               >
                 <Play size={12} />
               </Button>
               <Button
                 color="gray"
-                className="cursor-pointer rounded-md bg-transparent hover:bg-zinc-700/20 w-8 backdrop-blur-2xl p-2 flex items-center justify-center"
+                className="cursor-pointer rounded-md bg-transparent hover:bg-zinc-700/20 w-8 backdrop-blur-3xl p-2 flex items-center justify-center"
               >
                 <Pause size={12} />
               </Button>
               <Button
                 color="gray"
-                className="cursor-pointer rounded-md bg-transparent hover:bg-zinc-700/20 w-8 backdrop-blur-2xl p-2 flex items-center justify-center"
+                className="cursor-pointer rounded-md bg-transparent hover:bg-zinc-700/20 w-8 backdrop-blur-3xl p-2 flex items-center justify-center"
               >
                 <SkipForward size={12} />
               </Button>
@@ -75,15 +93,15 @@ function Index() {
           </Flex>
         </Flex>
       </Flex>
-      <Flex direction="column" className="h-2/6" width="100%">
+      <Flex direction="column" className="h-2/6 bg-dark-9" width="100%">
         <Flex
           width="100%"
           align="center"
           justify="end"
           gap="4"
-          className="px-1 py-1"
+          className="py-1 pr-1"
         >
-          <Select.Root size="1">
+          <Select.Root size="1" onValueChange={(e) => getMediaStream(e)}>
             <Select.Trigger color="gray">
               <Flex align="center" gap="1">
                 <Text size="1">Select Source</Text>

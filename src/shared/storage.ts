@@ -2,12 +2,9 @@ import { createIndexedDbPersister } from "tinybase/cjs/persisters/persister-inde
 import { createStore } from "tinybase/cjs/with-schemas";
 
 export const store = createStore().setTablesSchema({
-  contact: {
-    name: {
+  project: {
+    path: {
       type: "string",
-    },
-    phoneNumber: {
-      type: "number",
     },
   },
 });

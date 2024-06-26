@@ -10,9 +10,11 @@
       "style": {
         "noUselessElse": "warn",
         "noNonNullAssertion": "warn"
+      },
+      "a11y": {
+        "useMediaCaption": "off"
       }
-    },
-    "ignore": ["./kuma.config.ts"]
+    }
   },
   "formatter": {
     "enabled": true,

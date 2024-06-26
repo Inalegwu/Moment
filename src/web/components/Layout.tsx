@@ -1,5 +1,6 @@
 import { useMount } from "@legendapp/state/react";
 import { Button, Dialog, Flex, Text } from "@radix-ui/themes";
+import t from "@src/shared/config";
 import { FolderOpen, Info, Plus, Settings, Sidebar, X } from "lucide-react";
 import type React from "react";
 import { globalState$ } from "../state";
@@ -9,6 +10,14 @@ type LayoutProps = {
 };
 
 export default function Layout({ children }: LayoutProps) {
+  const { mutate: openProject } = t.project.openProject.useMutation({
+    onSuccess: (d) => {
+      if (d?.cancelled) return;
+
+      console.log(d);
+    },
+  });
+
   useMount(() => {
     if (globalState$.colorMode.get() === "dark") {
       document.body.classList.add("dark");
@@ -26,7 +35,7 @@ export default function Layout({ children }: LayoutProps) {
         direction="column"
       >
         <Flex width="100%" grow="1" direction="column" align="start">
-          <Flex align="center" justify="end" width="100%" className="px-3 py-2">
+          <Flex align="center" justify="end" width="100%" className="px-1 py-1">
             <Button
               color="gray"
               className="cursor-pointer rounded-md bg-transparent p-2 hover:bg-zinc-700/20 w-8 flex items-center justify-center"
@@ -50,12 +59,13 @@ export default function Layout({ children }: LayoutProps) {
             align="center"
             justify="start"
             gap="2"
+            onClick={() => openProject()}
           >
             <FolderOpen size={12} />
             <Text className="text-[12px]">Open Project</Text>
           </Flex>
         </Flex>
-        <Flex className="px-2 py-2" align="center" justify="start" gap="2">
+        <Flex className="px-1 py-1" align="center" justify="start" gap="1">
           <Button
             color="gray"
             className="cursor-pointer rounded-md bg-transparent hover:bg-zinc-700/20 w-8 backdrop-blur-2xl p-2 flex items-center justify-center"
