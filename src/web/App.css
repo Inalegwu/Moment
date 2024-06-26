@@ -23,3 +23,10 @@ body {
   width: 0;
   background: transparent;
 }
+
+button{
+  appearance:none;
+  border:none;
+  background-color:none;
+  background:none;
+}
