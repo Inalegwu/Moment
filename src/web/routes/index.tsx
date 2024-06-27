@@ -2,7 +2,14 @@ import { useObservable } from "@legendapp/state/react";
 import { Button, Flex, Select, Text } from "@radix-ui/themes";
 import t from "@src/shared/config";
 import { createFileRoute } from "@tanstack/react-router";
-import { ChevronDown, Pause, Play, SkipBack, SkipForward } from "lucide-react";
+import {
+  Camera,
+  ChevronDown,
+  Pause,
+  Play,
+  SkipBack,
+  SkipForward,
+} from "lucide-react";
 import { useRef } from "react";
 import { useTimeout, useWindow } from "../hooks";
 
@@ -15,6 +22,8 @@ function Index() {
 
   const { data: mediaDevices } = t.media.getCaptureDevices.useQuery();
   const playBackVisible = useObservable(false);
+
+  const mStream = useObservable<MediaStream>();
 
   useTimeout(() => {
     if (playBackVisible.get()) {
@@ -34,16 +43,20 @@ function Index() {
       },
     });
 
-    console.log(stream);
-
     if (!previewRef.current) return;
 
-    const tracks = stream.getTracks();
-
-    tracks.map(console.log);
+    mStream.set(stream);
 
     previewRef.current.srcObject = stream;
     previewRef.current.play();
+  };
+
+  const capturePhoto = () => {
+    const streamBuf = mStream.get();
+
+    const vTracks = streamBuf.getVideoTracks();
+
+    vTracks.map(console.log);
   };
 
   useWindow("mousemove", () => {
@@ -61,7 +74,7 @@ function Index() {
           justify="between"
           className="absolute z-10 p-2 w-full h-full"
         >
-          <Flex align="center" justify="between" width="100%" />
+          <Flex align="center" justify="end" width="100%" />
           <Flex align="center" width="100%" justify="between">
             <Flex grow="1" />
             <Flex align="center" justify="end" gap="1">
@@ -89,6 +102,13 @@ function Index() {
               >
                 <SkipForward size={12} />
               </Button>
+              <Button
+                color="gray"
+                onClick={capturePhoto}
+                className="cursor-pointer rounded-md bg-transparent hover:bg-zinc-700/20 w-8 backdrop-blur-3xl p-2 flex items-center justify-center"
+              >
+                <Camera />
+              </Button>
             </Flex>
           </Flex>
         </Flex>
@@ -98,7 +118,7 @@ function Index() {
           width="100%"
           align="center"
           justify="end"
-          gap="4"
+          gap="3"
           className="py-1 pr-1"
         >
           <Select.Root size="1" onValueChange={(e) => getMediaStream(e)}>

@@ -18,7 +18,7 @@ export const projectsRouter = router({
         `${ctx.app.getPath}/Moment`,
         projectBuffer,
         {
-          encoding: "hex",
+          encoding: "base64",
           flush: true,
         },
         (err) => {
@@ -52,7 +52,7 @@ export const projectsRouter = router({
       };
 
     const data = await readFileSync(file, {
-      encoding: "hex",
+      encoding: "base64",
     });
 
     console.log(Buffer.from(data).toString("base64"));

@@ -12,7 +12,8 @@ configureObservablePersistence({
 
 export const globalState$ = observable<GlobalState>({
   colorMode: "dark",
-  projectId:null
+  projectId: null,
+  sidebar: false,
 });
 
 persistObservable(globalState$, {

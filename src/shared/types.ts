@@ -1,4 +1,5 @@
 export type GlobalState = {
   colorMode: "dark" | "light";
-  projectId:string|null;
+  projectId: string | null;
+  sidebar: boolean;
 };
